@@ -1,3 +1,7 @@
+body{
+    margin: 0 auto;
+}
+
 a {
     color: #007cb0;
 }
@@ -6,6 +10,11 @@ ul {
 }
 header{
     width: 100%;
+    background: #1F6F90;
+    height: 80px;
+}
+header a{
+   color: #fff;
 }
 header .header_text{
     padding-top: 20px;
@@ -26,7 +35,15 @@ header .menu{
 }
 .content {
     clear: both;
-    margin: 40px 20px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 1px 1px 3px #ccc;
+    border-top: 2px solid #ccc;
+}
+h2{
+    padding: 10px;
+    background: linear-gradient(left, #E7EEF0 0%,#fff 70%);
+    background: -webkit-linear-gradient(left, #E7EEF0 0%,#fff 70%);
 }
 #messages {
     width: 590px;
@@ -37,9 +54,14 @@ header .menu{
     font: 11pt 'Palatino Linotype';
     overflow: auto;
 }
-
+div.nick_name{
+    background: #b6b6b6;
+    border: 1px solid black;
+    float: left;
+    padding: 2px 3px;
+}
 #input {
-    width: 550px;
+    width: 400px;
 }
 
 #send {

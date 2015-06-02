@@ -25,7 +25,6 @@ $(function() {
             btn_send = $('#send'),
             input = $('#input');
         socket.on('data', function (data) {
-            console.log(data);
             switch (data.type) {
                 case 'message':
                     messages.append(createMessageElement(data));
@@ -38,12 +37,12 @@ $(function() {
             if (!input.val().trim().length) {
                 return;
             }
-            console.log("nick = " + nick);
             if (!nick) {
                 nick = input.val();
                 socket.emit('data', { type: 'select-nick', nick: input.val() });
                 $('#welcome .select-nick').hide();
                 $('#welcome .send-message').show();
+                $('.nick_name').html(nick);
             } else {
                 socket.emit('data', { type: 'message', text: input.val() });
             }
