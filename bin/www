@@ -1,13 +1,17 @@
 #!/usr/bin/env node
-
+/**
+ * Make a convenient format. Example: "Hello {0}{1}".f('world', '!')
+ */
+require('../my_modules/string_format').set_format();
 /**
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('Chat_nodejs:server');
-var http = require('http');
-//var io = require('socket.io');
+var app = require('../app'),
+    debug = require('debug')('Chat_nodejs:server'),
+    http = require('http'),
+    io = require('socket.io'),
+    chat_server = require('../chat_server');
 
 /**
  * Get port from environment and store in Express.
@@ -21,7 +25,11 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
+io = io.listen(server);
+io.set('log level', 1);
+io.sockets.on('connection', function (socket) {
+    chat_server.chat_server(socket)
+});
 /**
  * Listen on provided port, on all network interfaces.
  */

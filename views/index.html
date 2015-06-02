@@ -7,5 +7,35 @@
 {% endblock %}
 
 {% block content %}
-    Swig заработал, ура товарищи!
+<h2> Чат</h2>
+Чтобы посмотреть работу чата на локальной машине, просто запустите чат в сосдених вкладках Вашего браузера.
+
+<h2> Инструменты</h2>
+Демонстрационная программа "Чат".<br>
+Серверная часть написана на <a href="https://nodejs.org/"> nodejs</a> с использованием модулей:
+<ul>
+    <li>
+        <a href="http://expressjs.com/"> Express </a>
+    </li>
+    <li>
+        <a href="http://socket.io/"> Socket.io </a>
+    </li>
+    <li>
+        Шаблонизатор <a href="http://paularmstrong.github.io/swig/"> swig </a>
+    </li>
+    <li>
+        <a href="https://github.com/expressjs/morgan"> Morgan </a> для удобных логов
+    </li>
+</ul>
+Клиентская часть на javascript (<a href="https://jquery.com/"> JQuery</a>) <br>
+<p>
+    Структура проекта сгенерирована IDE <a href="https://www.jetbrains.com/webstorm/"> WebStorm </a>.
+</p>
+
+<h2> P.S.</h2>
+<p class="ps">
+    Просьба не судить строго, с nodeJs знаком совсем недавно. "Дизайн" тоже делался в очень сжатые сроки
+    (30 минут).
+</p>
+
 {% endblock %}

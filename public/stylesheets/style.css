@@ -1,8 +1,66 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+a {
+    color: #007cb0;
+}
+ul {
+    list-style: none;
+}
+header{
+    width: 100%;
+}
+header .header_text{
+    padding-top: 20px;
+}
+header h1{
+    margin: 0;
+}
+header .logo{
+    width: 200px;
+    height: 100px;
+    margin-right: 40px;
+    float: left;
+    background: url("/images/socket.io-logo.png") no-repeat;
+    background-size: contain;
+}
+header .menu{
+    float: left;
+}
+.content {
+    clear: both;
+    margin: 40px 20px;
+}
+#messages {
+    width: 590px;
+    height: 290px;
+    border: 1px solid rgb(192, 192, 192);
+    padding: 5px;
+    margin-bottom: 5px;
+    font: 11pt 'Palatino Linotype';
+    overflow: auto;
 }
 
-a {
-  color: #00B7FF;
+#input {
+    width: 550px;
 }
+
+#send {
+    width: 50px;
+}
+
+
+.time {
+    color: rgb(144, 144, 144);
+    font: 8pt 'Courier New';
+}
+.nick {
+    color: rgb(144, 22, 19);
+    font: 12pt 'Courier New';
+}
+.text {
+    color: rgb(15, 16, 144);
+    font: 10pt 'Courier New';
+}
+
+.system {
+    color: rgb(165, 42, 42);
+}
+
