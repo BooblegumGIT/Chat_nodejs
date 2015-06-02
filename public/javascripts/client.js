@@ -1,39 +1,63 @@
-strings = {
-    'connected': '[sys][time]%time%[/time]: Вы успешно соединились к сервером как [user]%name%[/user].[/sys]',
-    'userJoined': '[sys][time]%time%[/time]: Пользователь [user]%name%[/user] присоединился к чату.[/sys]',
-    'messageSent': '[out][time]%time%[/time]: [user]%name%[/user]: %text%[/out]',
-    'messageReceived': '[in][time]%time%[/time]: [user]%name%[/user]: %text%[/in]',
-    'userSplit': '[sys][time]%time%[/time]: Пользователь [user]%name%[/user] покинул чат.[/sys]'
-};
+function createMessageElement(msg) {
+
+    var messageElement = $('<li></li>'),
+        timeElement = $('<span></span>').addClass('time').text(msg.time + ' '),
+        nickElement = $('<span></span>').addClass('nick').text((msg.name ? msg.name : 'unknown')+':'),
+        textElement = $('<span></span>').addClass('text').text(msg.text ? msg.text: '');
+
+    messageElement.append(timeElement);
+    messageElement.append(nickElement);
+    messageElement.append(textElement);
+
+    return messageElement;
+}
+
+/**
+ * message format: {event: "", name: "", time: "17:05:18", text: ""}
+ */
+
 $(function() {
-    socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://localhost:3000');
+    var nick;
 
     socket.on('connect', function () {
-        var log = $('#log');
-        socket.on('message', function (msg) {
-            console.log(log.html());
-            // Добавляем в лог сообщение, заменив время, имя и текст на полученные
-            document.querySelector('#log').innerHTML += strings[msg.event]
-                    .replace(/\[([a-z]+)\]/g, '<span class="$1">')
-                    .replace(/\[\/[a-z]+\]/g, '</span>')
-                    .replace(/\%time\%/, msg.time).replace(/\%name\%/, msg.name)
-                    .replace(/\%text\%/, unescape(msg.text)
-                    .replace('<', '&lt;').replace('>', '&gt;')) + '<br>';
-            // Прокручиваем лог в конец
-            document.querySelector('#log').scrollTop = document.querySelector('#log').scrollHeight;
-        });
-        // При нажатии <Enter> или кнопки отправляем текст
-        document.querySelector('#input').onkeypress = function(e) {
-            if (e.which == '13') {
-                //socket.send(escape(document.querySelector('#input').value));
-                socket.emit('data', { type: 'message', nick: text.val() });
-                // Очищаем input
-                document.querySelector('#input').value = '';
+        var messages = $('#messages').find('ul'),
+            btn_send = $('#send'),
+            input = $('#input');
+        socket.on('data', function (data) {
+            console.log(data);
+            switch (data.type) {
+                case 'message':
+                    messages.append(createMessageElement(data));
+                    //document.querySelector('#messages').scrollTop = document.querySelector('#messages').scrollHeight;
+                    break;
             }
+
+        });
+        var sendMessage = function () {
+            if (!input.val().trim().length) {
+                return;
+            }
+            console.log("nick = " + nick);
+            if (!nick) {
+                nick = input.val();
+                socket.emit('data', { type: 'select-nick', nick: input.val() });
+                $('#welcome .select-nick').hide();
+                $('#welcome .send-message').show();
+            } else {
+                socket.emit('data', { type: 'message', text: input.val() });
+            }
+            input.val('');
         };
-        document.querySelector('#send').onclick = function() {
-            socket.send(escape(document.querySelector('#input').value));
-            document.querySelector('#input').value = '';
-        };
+        input.on('keypress', function(e) {
+            if (e.which == '13') { // Enter
+                sendMessage();
+                input.val('');
+            }
+        });
+        btn_send.on('click',function() {
+            sendMessage();
+            input.val('');
+        });
     });
 });
