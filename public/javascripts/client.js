@@ -17,7 +17,7 @@ function createMessageElement(msg) {
  */
 
 $(function() {
-    var socket = io.connect('http://localhost:3000');
+    var socket = io.connect('http://144.76.82.236:3000/');
     var nick;
 
     socket.on('connect', function () {
